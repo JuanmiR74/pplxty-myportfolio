@@ -33,3 +33,4 @@ button, input, select { font: inherit; }
 .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.55); display:grid; place-items:center; padding:24px; }
 .modal-card { width:min(980px,100%); max-height:90vh; overflow:auto; }
 @media (max-width: 900px) { .grid-two, .grid-3, .stats-row { grid-template-columns:1fr; } .header { padding:14px 16px; } .main-grid { padding:16px; } }
+.progress{height:10px;background:#24304f;border-radius:999px;overflow:hidden}.progress-fill{height:100%;background:var(--accent)}

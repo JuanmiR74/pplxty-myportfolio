@@ -202,7 +202,7 @@ const user = auth?.user; // Use nullish coalescing
 
   // ── ISIN Library ──────────────────────────────────────────────────────────
   const getByIsin = useCallback((isin: string): IsinEntry | undefined => {
-    return state.isinLibrary.find(e => e.isin === isin);
+    return state.isinLibrary.find((e: IsinEntry) => e.isin === isin);
   }, [state.isinLibrary]);
 
   const upsertIsin = useCallback((entry: Omit<IsinEntry, 'id'> & { id?: string }) => {
@@ -302,7 +302,7 @@ const user = auth?.user; // Use nullish coalescing
       else                           geoTotals['Sin clasificar']    = (geoTotals['Sin clasificar']    || 0) + value;
       if (td?.sectors?.length)      td.sectors.forEach(s      => { sectorTotals[s.name] = (sectorTotals[s.name] || 0) + value * s.weight / 100; });
       else                           sectorTotals['Sin clasificar'] = (sectorTotals['Sin clasificar'] || 0) + value;
-      if (td?.assetClassPro?.length) td.assetClassPro.forEach(ac => { acpTotals[ac.name] = (acpTotals[ac.name] || 0) + value * ac.weight / 100; });
+      if (td?.assetClassPro?.length) td.assetClassPro.forEach((ac: { name: string; weight: number }) => { acpTotals[ac.name] = (acpTotals[ac.name] || 0) + value * ac.weight / 100; });
       else                           acpTotals['Sin clasificar']   = (acpTotals['Sin clasificar']   || 0) + value;
     });
 
@@ -312,14 +312,14 @@ const user = auth?.user; // Use nullish coalescing
       else                              geoTotals['Sin clasificar']    = (geoTotals['Sin clasificar']    || 0) + amount;
       if (entry?.sectors?.length)      entry.sectors.forEach(s      => { sectorTotals[s.name] = (sectorTotals[s.name] || 0) + amount * s.weight / 100; });
       else                              sectorTotals['Sin clasificar'] = (sectorTotals['Sin clasificar'] || 0) + amount;
-      if (entry?.assetClassPro?.length) entry.assetClassPro.forEach(ac => { acpTotals[ac.name] = (acpTotals[ac.name] || 0) + amount * ac.weight / 100; });
+      if (entry?.assetClassPro?.length) entry.assetClassPro.forEach((ac: { name: string; weight: number }) => { acpTotals[ac.name] = (acpTotals[ac.name] || 0) + amount * ac.weight / 100; });
       else                              acpTotals['Sin clasificar']   = (acpTotals['Sin clasificar']   || 0) + amount;
     };
 
     const filteredRobos = (entity === 'all' || entity === 'Robo-Advisors') ? state.roboAdvisors : [];
-    filteredRobos.forEach(r => {
+    filteredRobos.forEach((r: RoboAdvisor) => {
       if (r.subFunds?.length) {
-        r.subFunds.forEach(sf =>
+        r.subFunds.forEach((sf: RoboSubFund) =>
           applyEntry(sf.isin ? isinMap.get(sf.isin.toUpperCase()) : undefined, r.totalValue * sf.weightPct / 100)
         );
       } else {
@@ -328,7 +328,7 @@ const user = auth?.user; // Use nullish coalescing
         else                           geoTotals['Sin clasificar']    = (geoTotals['Sin clasificar']    || 0) + r.totalValue;
         if (td?.sectors?.length)      td.sectors.forEach(s      => { sectorTotals[s.name] = (sectorTotals[s.name] || 0) + r.totalValue * s.weight / 100; });
         else                           sectorTotals['Sin clasificar'] = (sectorTotals['Sin clasificar'] || 0) + r.totalValue;
-        if (td?.assetClassPro?.length) td.assetClassPro.forEach(ac => { acpTotals[ac.name] = (acpTotals[ac.name] || 0) + r.totalValue * ac.weight / 100; });
+        if (td?.assetClassPro?.length) td.assetClassPro.forEach((ac: { name: string; weight: number }) => { acpTotals[ac.name] = (acpTotals[ac.name] || 0) + r.totalValue * ac.weight / 100; });
         else                           acpTotals['Sin clasificar']   = (acpTotals['Sin clasificar']   || 0) + r.totalValue;
       }
     });
